@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Diwali, at ours</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night: #2B0A14;
+    --night-deep: #170609;
+    --maroon: #7A1E33;
+    --marigold: #D4AF37;
+    --flame: #F2C14E;
+    --cream: #F7ECD9;
+    --cream-dim: #D9C6A5;
+    --ease: cubic-bezier(.22,.9,.32,1);
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--night-deep);
+    color: var(--cream);
+    font-family: 'Mulish', sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, .display{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+
+  /* ---------- Starfield ---------- */
+  .sky{
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 50% -10%, #4A0F1F 0%, var(--night) 45%, var(--night-deep) 100%);
+    z-index: -2;
+  }
+  .stars{
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .star{
+    position: absolute;
+    width: 2px; height: 2px;
+    background: var(--cream);
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: twinkle 4s ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%, 100% { opacity: 0.15; }
+    50% { opacity: 0.9; }
+  }
+
+  /* ---------- Hero / Diya ---------- */
+  .hero{
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8vh 6vw;
+    position: relative;
+  }
+
+  .diya-wrap{
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 1rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .diya-wrap svg{
+    width: 92px;
+    height: auto;
+    display: block;
+  }
+
+  .flame{
+    transform-origin: 50% 100%;
+    opacity: 0.25;
+    transition: opacity 0.6s var(--ease);
+  }
+  .flame-glow{
+    opacity: 0;
+    transition: opacity 0.8s var(--ease);
+  }
+  .lit .flame{
+    opacity: 1;
+    animation: flicker 2.2s ease-in-out infinite;
+  }
+  .lit .flame-glow{
+    opacity: 1;
+    animation: glow-pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes flicker{
+    0%, 100% { transform: scaleY(1) scaleX(1) rotate(0deg); }
+    25% { transform: scaleY(1.05) scaleX(0.97) rotate(-1deg); }
+    50% { transform: scaleY(0.96) scaleX(1.03) rotate(1deg); }
+    75% { transform: scaleY(1.03) scaleX(0.98) rotate(-0.5deg); }
+  }
+  @keyframes glow-pulse{
+    0%, 100% { opacity: 0.55; transform: scale(1); }
+    50% { opacity: 0.85; transform: scale(1.15); }
+  }
+
+  .tap-hint{
+    margin-top: 1.25rem;
+    font-size: 0.95rem;
+    color: var(--cream-dim);
+    letter-spacing: 0.02em;
+    transition: opacity 0.6s var(--ease);
+  }
+  .lit-page .tap-hint{ opacity: 0; height: 0; overflow: hidden; margin: 0; }
+
+  .reveal{
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 1.1s var(--ease), opacity 1s var(--ease) 0.15s, margin 1.1s var(--ease);
+  }
+  .lit-page .reveal{
+    max-height: 600px;
+    opacity: 1;
+    margin-top: 2.2rem;
+  }
+
+  .greeting{
+    font-size: 0.98rem;
+    color: var(--marigold);
+    margin-bottom: 0.9rem;
+  }
+
+  .headline{
+    font-size: clamp(2.4rem, 8vw, 4.2rem);
+    line-height: 1.08;
+    color: var(--cream);
+  }
+
+  .subline{
+    margin-top: 1.1rem;
+    font-size: clamp(1rem, 2.4vw, 1.2rem);
+    color: var(--cream-dim);
+    max-width: 34ch;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+  }
+
+  .scroll-cue{
+    position: absolute;
+    bottom: 5vh;
+    font-size: 0.8rem;
+    color: var(--cream-dim);
+    opacity: 0;
+    transition: opacity 1s var(--ease) 0.6s;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    pointer-events: none;
+    padding: 0.5rem 1rem;
+  }
+  .lit-page .scroll-cue{ opacity: 0.7; pointer-events: auto; }
+
+  /* ---------- Details section ---------- */
+  section{
+    padding: 5vh 7vw;
+    position: relative;
+  }
+
+  .details{
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .details h2{
+    font-size: clamp(1.7rem, 4vw, 2.3rem);
+    color: var(--cream);
+    margin-bottom: 2.2rem;
+  }
+
+  .fact-row{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.3rem 2.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .fact{
+    min-width: 130px;
+  }
+  .fact .label{
+    font-size: 0.8rem;
+    color: var(--marigold);
+    margin-bottom: 0.4rem;
+  }
+  .fact .value{
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    color: var(--cream);
+  }
+
+  .fact .value a.addr-link{
+    color: var(--flame);
+    text-decoration: underline;
+    text-decoration-color: rgba(212,175,55,0.6);
+    text-underline-offset: 4px;
+    transition: color 0.3s var(--ease), text-decoration-color 0.3s var(--ease);
+  }
+  .fact .value a.addr-link:hover,
+  .fact .value a.addr-link:active{
+    color: var(--cream);
+    text-decoration-color: var(--marigold);
+  }
+
+  .countdown{
+    display: flex;
+    justify-content: center;
+    gap: 1.6rem;
+    margin-top: 1rem;
+  }
+  .count-unit{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .count-num{
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    color: var(--flame);
+    line-height: 1;
+  }
+  .count-label{
+    font-size: 0.72rem;
+    color: var(--cream-dim);
+    margin-top: 0.4rem;
+    letter-spacing: 0.03em;
+  }
+
+  /* ---------- RSVP ---------- */
+  #details{ padding-bottom: 1vh; }
+  .rsvp{
+    text-align: center;
+    padding-top: 1vh;
+    padding-bottom: 3vh;
+  }
+  .rsvp h2{
+    font-size: clamp(1.6rem, 4vw, 2.1rem);
+    margin-bottom: 0.8rem;
+  }
+  .rsvp p{
+    color: var(--cream-dim);
+    max-width: 40ch;
+    margin: 0 auto 1.4rem;
+    line-height: 1.5;
+  }
+
+  .rsvp-buttons{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.9rem;
+  }
+
+  .btn{
+    display: inline-block;
+    padding: 0.9rem 1.9rem;
+    border-radius: 999px;
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  }
+  .btn-primary{
+    background: linear-gradient(135deg, var(--flame), var(--marigold));
+    color: var(--night-deep);
+  }
+  .btn-secondary{
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid rgba(244,233,216,0.35);
+  }
+  .btn:active{ transform: scale(0.97); }
+
+  footer{
+    text-align: center;
+    padding: 1rem 6vw 2.5rem;
+    font-size: 0.78rem;
+    color: rgba(201,191,174,0.5);
+  }
+
+  /* ---------- Wow pack: ambient + interaction polish ---------- */
+  .content-glow{
+    position: absolute;
+    top: 28%;
+    left: 50%;
+    width: 320px;
+    height: 320px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, var(--flame) 0%, transparent 70%);
+    opacity: 0;
+    filter: blur(50px);
+    transition: opacity 1.4s var(--ease);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .lit-page .content-glow{ opacity: 0.28; }
+
+  .embers{
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .ember{
+    position: absolute;
+    bottom: -10px;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--flame);
+    box-shadow: 0 0 6px var(--flame);
+    opacity: 0;
+    animation: riseEmber linear infinite;
+  }
+  @keyframes riseEmber{
+    0%   { opacity: 0; transform: translate(0, 0); }
+    12%  { opacity: 0.85; }
+    88%  { opacity: 0.35; }
+    100% { opacity: 0; transform: translate(var(--drift, 20px), -115vh); }
+  }
+
+  .spark{
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--flame);
+    box-shadow: 0 0 8px var(--marigold);
+    pointer-events: none;
+    animation: sparkFly 1.1s ease-out forwards;
+    z-index: 3;
+  }
+  @keyframes sparkFly{
+    0%   { transform: translate(0, 0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--dx), var(--dy)) scale(0.2); opacity: 0; }
+  }
+
+  .headline{
+    background: linear-gradient(100deg, var(--cream) 30%, var(--marigold) 45%, var(--flame) 50%, var(--marigold) 55%, var(--cream) 70%);
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 7s linear infinite;
+  }
+  @keyframes shimmer{
+    0%   { background-position: 220% 0; }
+    100% { background-position: -220% 0; }
+  }
+
+  @keyframes bounceCue{
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+  .lit-page .scroll-cue{ animation: bounceCue 2s ease-in-out infinite; }
+
+  .reveal-up{
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  }
+  .reveal-up.in-view{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .ember, .headline, .scroll-cue{ animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sky"></div>
+<div class="stars" id="stars"></div>
+<div class="embers" id="embers"></div>
+
+<div class="hero" id="hero">
+  <div class="content-glow"></div>
+  <button class="diya-wrap" id="diyaBtn" aria-label="Light the diya">
+    <svg viewBox="0 0 120 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse class="flame-glow" cx="60" cy="55" rx="34" ry="34" fill="url(#glowGrad)"/>
+      <path class="flame" d="M60 30 C68 45, 74 52, 64 66 C61 70, 57 70, 54 66 C46 54, 52 44, 60 30Z" fill="url(#flameGrad)"/>
+      <path d="M18 92 C18 78, 36 78, 60 78 C84 78, 102 78, 102 92 C102 108, 84 116, 60 116 C36 116, 18 108, 18 92Z" fill="#3A2A1E"/>
+      <ellipse cx="60" cy="92" rx="42" ry="10" fill="#4E3826"/>
+      <ellipse cx="60" cy="90" rx="10" ry="4" fill="#1D140D"/>
+      <defs>
+        <radialGradient id="flameGrad" cx="0.5" cy="0.3" r="0.7">
+          <stop offset="0%" stop-color="#FFE9B0"/>
+          <stop offset="45%" stop-color="#FF8A3D"/>
+          <stop offset="100%" stop-color="#C64A2C"/>
+        </radialGradient>
+        <radialGradient id="glowGrad" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0%" stop-color="#FF8A3D" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#FF8A3D" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+    </svg>
+  </button>
+
+  <div class="tap-hint">tap the diya</div>
+
+  <div class="reveal">
+    <div class="greeting" id="greeting">You're invited</div>
+    <h1 class="headline">Diwali,<br>with us.</h1>
+    <p class="subline">An evening of lights, good food, music, sweets, and wonderful company.<br>Come dressed to shine — we certainly intend to. ✨ <br><br>And when dinner is done, the games begin…<br>
+    Cards & Nicky’s Bingo Night. 🎴🎲 <br><br>Bring your lucky streak & your game face — <br>
+    you’re going to need it. 😉</p>
+  </div>
+
+  <a class="scroll-cue" href="#details">↓ details below</a>
+</div>
+
+<section id="details">
+  <div class="details reveal-up">
+        <div class="fact-row">
+      <div class="fact">
+        <div class="label">Date</div>
+        <div class="value">Sat, 7 Nov</div>
+      </div>
+      <div class="fact">
+        <div class="label">Time</div>
+        <div class="value">6:00 PM</div>
+      </div>
+      <div class="fact">
+        <div class="label">Where</div>
+        <div class="value"><a class="addr-link" href="https://maps.app.goo.gl/jz7UUNqM54Z3rUR1A" target="_blank" rel="noopener">18 The Avenue, Kilternan Wood, Kilternan, Dublin 18, D18 YR7T</a></div>
+      </div>
+    </div>
+
+    <div class="countdown" id="countdown"></div>
+  </div>
+</section>
+
+<section class="rsvp reveal-up">
+  <h2>Let us know you're coming</h2>
+  <p>A quick reply helps with food and arrangement — no formal RSVP needed, just tap below.</p>
+  <div class="rsvp-buttons">
+    <a class="btn btn-primary" href="https://wa.me/353851115272?text=I%27ll%20be%20there%20for%20Diwali!%20🪔" target="_blank" rel="noopener">I'll be there</a>
+    <a class="btn btn-secondary" href="https://wa.me/353851115272?text=Can%27t%20make%20it%20this%20time%20—%20thinking%20of%20you!" target="_blank" rel="noopener">Can't make it</a>
+  </div>
+</section>
+
+<footer>Shubh Deepavali — see you soon. From Raaya, Ivaan, Nicky & Lalit</footer>
+
+<script>
+  // Starfield
+  const starsEl = document.getElementById('stars');
+  const starCount = window.innerWidth < 600 ? 60 : 110;
+  for (let i = 0; i < starCount; i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top = Math.random() * 70 + '%';
+    s.style.animationDelay = (Math.random() * 4) + 's';
+    s.style.width = s.style.height = (Math.random() < 0.15 ? 3 : 2) + 'px';
+    starsEl.appendChild(s);
+  }
+
+  // Personalize via ?name=
+  const params = new URLSearchParams(window.location.search);
+  const guestName = params.get('name');
+  if (guestName){
+    document.getElementById('greeting').textContent = `${decodeURIComponent(guestName)}, you're invited`;
+  }
+
+  // Diya tap reveal
+  const diyaBtn = document.getElementById('diyaBtn');
+  const hero = document.getElementById('hero');
+  let lit = false;
+  function lightDiya(){
+    if (lit) return;
+    lit = true;
+    diyaBtn.classList.add('lit');
+    hero.classList.add('lit-page');
+    burstSparks();
+  }
+  diyaBtn.addEventListener('click', lightDiya);
+
+  // Countdown — edit target date/time below
+  const target = new Date('2026-11-07T18:00:00');
+  const countdownEl = document.getElementById('countdown');
+  const units = [
+    { label: 'days', ms: 86400000 },
+    { label: 'hrs', ms: 3600000 },
+    { label: 'min', ms: 60000 },
+    { label: 'sec', ms: 1000 }
+  ];
+
+  function renderCountdown(){
+    let diff = target - new Date();
+    if (diff < 0) diff = 0;
+    countdownEl.innerHTML = '';
+    units.forEach(u => {
+      const val = Math.floor(diff / u.ms);
+      diff -= val * u.ms;
+      const wrap = document.createElement('div');
+      wrap.className = 'count-unit';
+      wrap.innerHTML = `<div class="count-num">${val}</div><div class="count-label">${u.label}</div>`;
+      countdownEl.appendChild(wrap);
+    });
+  }
+  renderCountdown();
+  setInterval(renderCountdown, 1000);
+
+
+  // ---------- Wow pack: ambient embers ----------
+  const embersEl = document.getElementById('embers');
+  const emberCount = window.innerWidth < 600 ? 14 : 24;
+  for (let i = 0; i < emberCount; i++){
+    const e = document.createElement('div');
+    e.className = 'ember';
+    e.style.left = Math.random() * 100 + '%';
+    e.style.setProperty('--drift', (Math.random() * 80 - 40) + 'px');
+    e.style.animationDuration = (9 + Math.random() * 8) + 's';
+    e.style.animationDelay = (Math.random() * 10) + 's';
+    embersEl.appendChild(e);
+  }
+
+  // ---------- Wow pack: spark burst on the diya tap ----------
+  function burstSparks(){
+    const originRect = diyaBtn.getBoundingClientRect();
+    const heroRect = hero.getBoundingClientRect();
+    const originX = originRect.left + originRect.width / 2 - heroRect.left;
+    const originY = originRect.top + originRect.height * 0.35 - heroRect.top;
+    for (let i = 0; i < 26; i++){
+      const s = document.createElement('span');
+      s.className = 'spark';
+      const angle = Math.random() * Math.PI * 2;
+      const dist = 60 + Math.random() * 100;
+      const dx = Math.cos(angle) * dist;
+      const dy = Math.sin(angle) * dist - 50;
+      s.style.left = originX + 'px';
+      s.style.top = originY + 'px';
+      s.style.setProperty('--dx', dx + 'px');
+      s.style.setProperty('--dy', dy + 'px');
+      s.style.animationDelay = (Math.random() * 0.15) + 's';
+      hero.appendChild(s);
+      setTimeout(() => s.remove(), 1400);
+    }
+  }
+
+  // ---------- Wow pack: scroll reveal ----------
+  const revealEls = document.querySelectorAll('.reveal-up');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
