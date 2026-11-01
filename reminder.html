@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#170609">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="Diwali, with us. 🪔 One week to go">
+<meta property="og:description" content="Sat 7 Nov, 6:00 PM — see you there.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mehtalalit.github.io/Diwali/reminder.html">
+<meta property="og:image" content="https://mehtalalit.github.io/Diwali/og-reminder.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<title>Diwali — one week to go</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#2B0A14; --deep:#170609; --gold:#D4AF37; --flame:#F2C14E;
+    --cream:#F7ECD9; --dim:#D9C6A5; --ease:cubic-bezier(.22,.9,.32,1);
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ background:var(--deep); scroll-behavior:smooth; }
+  /* body stays transparent so the fixed background layers below are visible */
+  body{
+    color:var(--cream); font-family:'Mulish',sans-serif; text-align:center;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+
+  /* ---------- fixed background layers ---------- */
+  .sky{ position:fixed; inset:0; z-index:-4;
+    background:radial-gradient(ellipse at 50% 0%, #4A0F1F 0%, var(--night) 45%, var(--deep) 100%); }
+  .stars,.embers{ position:fixed; inset:0; pointer-events:none; overflow:hidden; }
+  .stars{ z-index:-3; } .embers{ z-index:-1; }
+  .star{ position:absolute; width:2px; height:2px; border-radius:50%; background:var(--cream); animation:tw 4s ease-in-out infinite; }
+  @keyframes tw{ 0%,100%{ opacity:.15 } 50%{ opacity:.9 } }
+  .ember{ position:absolute; bottom:-10px; width:3px; height:3px; border-radius:50%;
+    background:var(--flame); box-shadow:0 0 6px var(--flame); opacity:0; animation:rise linear infinite; }
+  @keyframes rise{ 0%{ opacity:0; transform:translate(0,0) } 12%{ opacity:.85 } 88%{ opacity:.3 }
+    100%{ opacity:0; transform:translate(var(--dx,20px),-115vh) } }
+
+  /* ---------- mandala ---------- */
+  #mandala{
+    position:fixed; z-index:-2; pointer-events:none;
+    top:42%; left:50%; width:min(150vw,1000px); height:auto;
+    transform:translate(-50%,-50%); opacity:.5;
+  }
+  #mandala .a{ transform-origin:0 0; animation:spin 160s linear infinite; }
+  #mandala .b{ transform-origin:0 0; animation:spin 110s linear infinite reverse; }
+  @keyframes spin{ to{ transform:rotate(360deg) } }
+  /* visible by default; the draw-in only plays on top of that, so it can never end up hidden */
+  #mandala path,#mandala circle.ring{
+    fill:none; stroke:var(--gold); stroke-width:1.2; stroke-linecap:round;
+    animation:draw 3s var(--ease) both;
+  }
+  #mandala path.soft{ stroke:var(--flame); stroke-width:.9; opacity:.85; }
+  @keyframes draw{ from{ stroke-dasharray:1; stroke-dashoffset:1 } to{ stroke-dasharray:1; stroke-dashoffset:0 } }
+  #mandala circle.dot{ fill:var(--flame); animation:dot 1.2s ease both; }
+  @keyframes dot{ from{ opacity:0 } to{ opacity:.95 } }
+
+  /* ---------- hero ---------- */
+  .hero{ min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:8vh 7vw 12vh; position:relative; }
+  .hero::before{ content:''; position:absolute; z-index:-1; pointer-events:none;
+    left:50%; top:54%; width:130%; height:62%; transform:translate(-50%,-50%);
+    background:radial-gradient(ellipse at center, rgba(23,6,9,.92) 0%, rgba(23,6,9,.8) 38%, rgba(23,6,9,.35) 62%, transparent 75%); }
+  .diya{ width:92px; display:block; margin-bottom:1.4rem; cursor:pointer; -webkit-tap-highlight-color:transparent;
+    filter:drop-shadow(0 0 24px rgba(242,193,78,.6)); }
+  .flame{ transform-box:fill-box; transform-origin:50% 100%; animation:fl 2.2s ease-in-out infinite; }
+  .glow{ transform-box:fill-box; transform-origin:50% 50%; animation:gp 2.2s ease-in-out infinite; }
+  @keyframes fl{ 0%,100%{ transform:scale(1) rotate(0) } 25%{ transform:scaleY(1.07) scaleX(.97) rotate(-1.2deg) }
+    50%{ transform:scaleY(.96) scaleX(1.03) rotate(1deg) } 75%{ transform:scaleY(1.03) scaleX(.98) rotate(-.5deg) } }
+  @keyframes gp{ 0%,100%{ opacity:.55; transform:scale(1) } 50%{ opacity:.95; transform:scale(1.15) } }
+
+  .kicker{ font-size:1rem; font-weight:600; color:var(--flame); text-shadow:0 1px 10px rgba(23,6,9,.95); letter-spacing:.05em; margin-bottom:.6rem; }
+  h1{ font-family:'Cormorant Garamond',serif; font-weight:500; line-height:1.04; font-size:clamp(3rem,13vw,5.2rem);
+    background:linear-gradient(100deg,var(--cream) 30%,var(--gold) 45%,var(--flame) 50%,var(--gold) 55%,var(--cream) 70%);
+    background-size:250% 100%; -webkit-background-clip:text; background-clip:text;
+    color:transparent; -webkit-text-fill-color:transparent; animation:sh 7s linear infinite; filter:drop-shadow(0 2px 14px rgba(23,6,9,.9)); }
+  @keyframes sh{ 0%{ background-position:220% 0 } 100%{ background-position:-220% 0 } }
+  .sub{ margin-top:1rem; color:var(--cream); text-shadow:0 1px 12px rgba(23,6,9,.95); max-width:30ch; line-height:1.55; font-size:1.05rem; }
+
+  /* diya trail */
+  .trail{ display:grid; grid-template-columns:repeat(7,1fr); gap:.2rem; width:min(100%,420px); margin-top:2.2rem; }
+  .mini{ display:flex; flex-direction:column; align-items:center; }
+  .mini svg{ width:min(100%,40px); height:auto; overflow:visible; }
+  .mini .mf{ transform-box:fill-box; transform-origin:50% 100%; opacity:.12; transition:opacity .6s; }
+  .mini.on .mf{ opacity:1; animation:fl 2.2s ease-in-out infinite; animation-delay:var(--d,0s); }
+  .mini span{ margin-top:.35rem; font-size:.66rem; color:var(--cream); opacity:.6; text-shadow:0 1px 8px rgba(23,6,9,.95); transition:opacity .6s,color .6s; }
+  .mini.on span{ opacity:1; }
+  .mini.today span{ color:var(--flame); font-weight:700; }
+  .mini.today svg{ filter:drop-shadow(0 0 10px rgba(242,193,78,.8)); }
+
+  .cue{ position:absolute; bottom:4.5vh; font-size:.8rem; color:var(--dim); text-decoration:none;
+    letter-spacing:.04em; opacity:.75; animation:bob 2s ease-in-out infinite; }
+  @keyframes bob{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(6px) } }
+
+  /* ---------- details ---------- */
+  section{ padding:6vh 7vw 10vh; }
+  .card{ max-width:520px; margin:0 auto; padding:2.2rem 1.5rem; border:1px solid rgba(212,175,55,.3); border-radius:20px;
+    background:linear-gradient(160deg,rgba(122,30,51,.35),rgba(23,6,9,.5));
+    -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); }
+  .eyebrow{ font-size:.75rem; color:var(--gold); letter-spacing:.14em; text-transform:uppercase; margin-bottom:.4rem; }
+  .when{ font-family:'Cormorant Garamond',serif; font-size:1.9rem; }
+  .countdown{ display:flex; justify-content:center; gap:1.5rem; margin:1.4rem 0 1.6rem; }
+  .cu{ display:flex; flex-direction:column; align-items:center; min-width:3rem; }
+  .cn{ font-family:'Cormorant Garamond',serif; font-size:2.6rem; color:var(--flame); line-height:1; font-variant-numeric:tabular-nums; }
+  .cn.tick{ animation:tick .45s var(--ease); }
+  @keyframes tick{ from{ transform:translateY(-6px); opacity:.3 } to{ transform:none; opacity:1 } }
+  .cl{ font-size:.7rem; color:var(--dim); margin-top:.4rem; }
+  .where{ font-size:.95rem; line-height:1.5; }
+  .where a{ color:var(--flame); text-underline-offset:4px; text-decoration-color:rgba(212,175,55,.6); }
+  .btns{ display:flex; flex-wrap:wrap; justify-content:center; gap:.8rem; margin-top:1.8rem; }
+  .btn{ padding:.85rem 1.6rem; border-radius:999px; font:600 .98rem 'Mulish',sans-serif; text-decoration:none; transition:transform .25s; }
+  .btn:active{ transform:scale(.97); }
+  .primary{ background:linear-gradient(135deg,var(--flame),var(--gold)); color:var(--deep); }
+  .ghost{ border:1px solid rgba(247,236,217,.35); color:var(--cream); }
+  footer{ padding:0 6vw 3.5rem; font-size:.78rem; color:rgba(217,198,165,.55); }
+
+  /* sparks on tap */
+  .spark{ position:fixed; width:4px; height:4px; border-radius:50%; background:var(--flame);
+    box-shadow:0 0 8px var(--gold); pointer-events:none; z-index:5; animation:sp 1s ease-out forwards; }
+  @keyframes sp{ to{ transform:translate(var(--x),var(--y)) scale(.2); opacity:0 } }
+
+  /* entrance + scroll reveal (only hidden when JS runs) */
+  .fade{ opacity:0; transform:translateY(18px); animation:up .9s var(--ease) forwards; }
+  @keyframes up{ to{ opacity:1; transform:none } }
+  .js .rv{ opacity:0; transform:translateY(32px); transition:opacity .9s var(--ease),transform .9s var(--ease); }
+  .js .rv.in{ opacity:1; transform:none; }
+
+  @media (prefers-reduced-motion:reduce){
+    .star,.flame,.glow,h1,.cue,#mandala .a,#mandala .b,.mini.on .mf,.cn.tick{ animation:none !important }
+    #mandala path,#mandala circle.ring{ animation:none !important }
+    #mandala circle.dot{ animation:none !important }
+    .ember{ animation:none !important; opacity:.35 !important }
+    .fade{ animation:none; opacity:1; transform:none }
+    .js .rv{ opacity:1; transform:none; transition:none }
+  }
+</style>
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+<div class="sky"></div>
+<div class="stars" id="stars"></div>
+<div class="embers" id="embers"></div>
+
+<svg id="mandala" viewBox="-250 -250 500 500" aria-hidden="true">
+  <g class="a" id="mA"></g>
+  <g class="b" id="mB"></g>
+</svg>
+
+<div class="hero">
+  <svg class="diya fade" id="diya" viewBox="0 0 120 130" fill="none" aria-label="Diya">
+    <defs>
+      <radialGradient id="fg" cx=".5" cy=".3" r=".7"><stop offset="0" stop-color="#FFE9B0"/><stop offset=".45" stop-color="#FF8A3D"/><stop offset="1" stop-color="#C64A2C"/></radialGradient>
+      <radialGradient id="gg" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FF8A3D" stop-opacity=".55"/><stop offset="1" stop-color="#FF8A3D" stop-opacity="0"/></radialGradient>
+    </defs>
+    <ellipse class="glow" cx="60" cy="55" rx="34" ry="34" fill="url(#gg)"/>
+    <path class="flame" d="M60 30 C68 45,74 52,64 66 C61 70,57 70,54 66 C46 54,52 44,60 30Z" fill="url(#fg)"/>
+    <path d="M18 92 C18 78,36 78,60 78 C84 78,102 78,102 92 C102 108,84 116,60 116 C36 116,18 108,18 92Z" fill="#3A2A1E"/>
+    <ellipse cx="60" cy="92" rx="42" ry="10" fill="#4E3826"/>
+    <ellipse cx="60" cy="90" rx="10" ry="4" fill="#1D140D"/>
+  </svg>
+  <div class="kicker fade" id="kicker" style="animation-delay:.15s">A little reminder</div>
+  <h1 class="fade" id="head" style="animation-delay:.3s">One week<br>to go.</h1>
+  <p class="sub fade" id="sub" style="animation-delay:.5s">The diyas are being lined up. Come dressed to shine — and bring your lucky streak for Nicky’s Bingo Night. 🎴</p>
+  <div class="trail fade" id="trail" style="animation-delay:.7s"></div>
+  <a class="cue" href="#details">↓ details</a>
+</div>
+
+<section id="details">
+  <div class="card rv">
+    <div class="eyebrow">Saturday</div>
+    <div class="when">7 November · 6:00 PM</div>
+    <div class="countdown" id="cd"></div>
+    <div class="where"><a href="https://maps.app.goo.gl/jz7UUNqM54Z3rUR1A" target="_blank" rel="noopener">18 The Avenue, Kilternan Wood, Kilternan, Dublin 18, D18 YR7T</a></div>
+    <div class="btns">
+      <a class="btn primary" href="diwali-party.ics">Add to calendar</a>
+      <a class="btn ghost" href="https://wa.me/353851115272?text=See%20you%20Saturday!%20%F0%9F%AA%94" target="_blank" rel="noopener">Message us</a>
+    </div>
+  </div>
+</section>
+<footer>Shubh Deepavali — From Raaya, Ivaan, Nicky &amp; Lalit</footer>
+
+<script>
+(function(){
+  const NS='http://www.w3.org/2000/svg';
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const q=new URLSearchParams(location.search);
+
+  // stars + embers
+  const st=document.getElementById('stars');
+  for(let i=0;i<(innerWidth<600?50:90);i++){const d=document.createElement('div');d.className='star';
+    d.style.left=Math.random()*100+'%';d.style.top=Math.random()*100+'%';d.style.animationDelay=Math.random()*4+'s';st.appendChild(d);}
+  const em=document.getElementById('embers');
+  for(let i=0;i<(innerWidth<600?12:22);i++){const e=document.createElement('div');e.className='ember';
+    e.style.left=Math.random()*100+'%';e.style.setProperty('--dx',(Math.random()*80-40)+'px');
+    e.style.animationDuration=(9+Math.random()*8)+'s';e.style.animationDelay=(Math.random()*10)+'s';em.appendChild(e);}
+
+  // mandala: layer A (rings, big petals, dots) turns one way, layer B (small petals) the other
+  const A=document.getElementById('mA'), B=document.getElementById('mB');
+  function path(g,d,delay,rot,cls){const p=document.createElementNS(NS,'path');p.setAttribute('d',d);p.setAttribute('pathLength','1');
+    if(rot)p.setAttribute('transform','rotate('+rot+')');if(cls)p.setAttribute('class',cls);p.style.animationDelay=delay+'s';g.appendChild(p);}
+  function ring(g,r,delay){const c=document.createElementNS(NS,'circle');c.setAttribute('r',r);c.setAttribute('pathLength','1');
+    c.setAttribute('class','ring');c.style.animationDelay=delay+'s';g.appendChild(c);}
+  [240,226,124,60].forEach((r,i)=>ring(A,r,.1+i*.25));
+  for(let i=0;i<16;i++)path(A,'M0,-62 C34,-110 34,-170 0,-222 C-34,-170 -34,-110 0,-62Z',.5+i*.08,i*22.5);
+  for(let i=0;i<16;i++)path(B,'M0,-40 C16,-70 16,-100 0,-128 C-16,-100 -16,-70 0,-40Z',1.1+i*.06,i*22.5+11.25,'soft');
+  for(let i=0;i<8;i++)path(B,'M0,-14 C10,-30 10,-44 0,-56 C-10,-44 -10,-30 0,-14Z',1.7+i*.08,i*45,'soft');
+  for(let i=0;i<32;i++){const a=i*Math.PI*2/32,c=document.createElementNS(NS,'circle');
+    c.setAttribute('cx',(233*Math.cos(a)).toFixed(2));c.setAttribute('cy',(233*Math.sin(a)).toFixed(2));
+    c.setAttribute('r','1.8');c.setAttribute('class','dot');c.style.animationDelay=(2.2+i*.03)+'s';A.appendChild(c);}
+
+  // days left (?left=3 to preview)
+  const sod=x=>new Date(x.getFullYear(),x.getMonth(),x.getDate());
+  const PARTY=new Date(2026,10,7,18,0,0);
+  let left=Math.round((sod(PARTY)-sod(new Date()))/864e5);
+  if(q.has('left')&&!isNaN(+q.get('left')))left=+q.get('left');
+  const h=document.getElementById('head');
+  if(left<=0)h.innerHTML='Tonight,<br>we light up.';
+  else if(left===1)h.innerHTML='Tomorrow<br>night.';
+  else if(left<7)h.innerHTML=left+' days<br>to go.';
+  if(q.get('name'))document.getElementById('kicker').textContent=q.get('name')+', a little reminder';
+
+  // 7-diya trail: 31 Oct → 6 Nov, one more lit each day
+  const wd=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], tr=document.getElementById('trail');
+  const mini='<svg viewBox="0 0 120 130" fill="none"><path class="mf" d="M60 30 C68 45,74 52,64 66 C61 70,57 70,54 66 C46 54,52 44,60 30Z" fill="url(#fg)"/><path d="M18 92 C18 78,36 78,60 78 C84 78,102 78,102 92 C102 108,84 116,60 116 C36 116,18 108,18 92Z" fill="#3A2A1E"/><ellipse cx="60" cy="92" rx="42" ry="10" fill="#4E3826"/><ellipse cx="60" cy="90" rx="10" ry="4" fill="#1D140D"/></svg>';
+  for(let i=0;i<7;i++){const d=new Date(2026,10,i),el=document.createElement('div');
+    el.className='mini'+(i===7-left?' today':'');el.style.setProperty('--d',(Math.random()*2).toFixed(2)+'s');
+    el.innerHTML=mini+'<span>'+wd[d.getDay()]+' '+d.getDate()+'</span>';tr.appendChild(el);
+    if(i<=7-left)setTimeout(()=>el.classList.add('on'),reduce?0:900+i*280);}
+
+  // countdown
+  const U=[['days',864e5],['hrs',36e5],['min',6e4],['sec',1e3]],cd=document.getElementById('cd');
+  const N=U.map(u=>{const w=document.createElement('div');w.className='cu';
+    w.innerHTML='<div class="cn">0</div><div class="cl">'+u[0]+'</div>';cd.appendChild(w);return w.firstChild;});
+  function tick(){let d=Math.max(PARTY-new Date(),0);U.forEach((u,i)=>{const v=Math.floor(d/u[1]);d-=v*u[1];
+    if(N[i].textContent!==String(v)){N[i].textContent=v;N[i].classList.remove('tick');void N[i].offsetWidth;N[i].classList.add('tick');}});}
+  tick();setInterval(tick,1000);
+
+  // sparks on tap
+  addEventListener('click',e=>{if(reduce||e.target.closest('a'))return;
+    for(let i=0;i<18;i++){const s=document.createElement('span');s.className='spark';
+      const a=Math.random()*Math.PI*2,r=40+Math.random()*80;
+      s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';
+      s.style.setProperty('--x',Math.cos(a)*r+'px');s.style.setProperty('--y',Math.sin(a)*r-30+'px');
+      document.body.appendChild(s);setTimeout(()=>s.remove(),1100);}});
+
+  // scroll reveal
+  const rv=document.querySelectorAll('.rv');
+  if('IntersectionObserver'in window){const io=new IntersectionObserver(es=>es.forEach(en=>{
+    if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}}),{threshold:.15});rv.forEach(el=>io.observe(el));}
+  else rv.forEach(el=>el.classList.add('in'));
+})();
+</script>
+</body>
+</html>
